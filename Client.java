@@ -1,34 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Client {
 
     private int idClient;
     private String nameClient;
     private int ageClient;
-    private List<Account> listAccounts;
 
     //Конструктор класса
     Client(int id, String name, int age){
         this.idClient = id;
         this.nameClient = name;
         this.ageClient = age;
-        this.listAccounts = new ArrayList<>();
     }
 
-    //возвращает id клиента
-    public int getIdClient() {
-        return idClient;
-    }
-
-    //добавляет аккаунт в список клиента
-    public void setListAccounts(Account account){
-        listAccounts.add(account);
-    }
-
-    //возвращает список аккаунтов клиента
-    public static List<Account> getListAccounts(Client client) {
-        return client.listAccounts;
+    //конструктор для поиска
+    Client(int id){
+        this.idClient = id;
     }
 
     //переопределение hashcode и equals

@@ -1,19 +1,36 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Bank {
     //база аккаунтов
     private static Map<Account, Client> accountBase = new HashMap<>();
+    //база клиентов
+    private static Map<Client, List<Account>> clientBase = new HashMap<>();
 
     //привязка аккаунтов к клиентам (заполнение списка и map)
     private static void connectAccountWithClient(Account account, Client client) {
-        client.setListAccounts(account);
         accountBase.put(account, client);
+
+        //проверяем если такая связка уже добавлена, получаем список аккаунтов и добавляем новый
+        if (clientBase.containsKey(client)){
+            List<Account> tempListAccount = clientBase.get(client);
+            tempListAccount.add(account);
+        } else { //если такой связки нет, создаем новый список и добавляем
+            List<Account> tempListAccount = new ArrayList<>();
+            tempListAccount.add(account);
+            clientBase.put(client,tempListAccount);
+        }
     }
 
     //поиск клиента по мапе
     public static Client findClient(Account account){
         return accountBase.get(account);
+    }
+    //поиск аккаунтов по мапе
+    public static List<Account> findAccount(Client client){
+        return clientBase.get(client);
     }
 
     public static void main(String[] args) {
@@ -41,10 +58,11 @@ public class Bank {
         connectAccountWithClient(new Account(11),client7);
 
         //хотим найти клиента которому пренадлежит аккаунт с id-10
-        System.out.println(findClient(new Account(10)).getIdClient());
+        System.out.println(findClient(new Account(10)));
 
-        //хотим получить список аккаунтов клиента client6
-        System.out.println(Client.getListAccounts(client6));
+        //хотим получить список аккаунтов клиента с id-5
+        System.out.println(findAccount(new Client(5)));
+        //для поиска будет достаточно "пустого" клиента с id так условно считаем его уникальным
     }
 
 }
