@@ -7,4 +7,9 @@ public class LibraryDigitsInWordsDummy implements LibraryDigitsInWords {
     public String getValue(int digit) {
         return null;
     }
+    @Override
+    public String getEnding(int lustDigit){ return null; }
+
+    @Override
+    public String getCents(int cent){ return null; }
 }

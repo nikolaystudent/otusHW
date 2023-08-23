@@ -6,19 +6,27 @@ public class NumbersInWordsApplication {
 
     public void run(IOService ioService, LibraryDigitsInWords libraryWords, StringCreator creator) {
         while (true) {
-            ioService.outputString("Введите число от 1 до 99_999 для преобразования или stop для остановки программы");
+            ioService.outputString("Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы");
             try {
-                String number = ioService.inputString();
-                if (Objects.equals(number, "stop")) {
+                String input = ioService.inputString();
+                double inpunDouble;
+                if (Objects.equals(input, "stop")) {
                     break;
-                } else if (Integer.parseInt(number) > 99_999 || Integer.parseInt(number) < 1){
-                    throw new Exception("Ошибка ввода, попробуйте еще раз");
                 }
-                String result = creator.createString(number, libraryWords);
+                try {
+                    inpunDouble = Double.parseDouble(input);
+                } catch (Exception e) {
+                    throw new Exception("введенное значение не является числом");
+                }
+                if (inpunDouble > 99_999.99 || inpunDouble < 0.01) {
+                    throw new Exception("число вне диапазона");
+                }
+                String result = creator.createString(input, libraryWords);
                 ioService.outputString(result);
             } catch (Exception e){
-                ioService.outputString(e.getMessage());
+                ioService.outputString("Ошибка ввода: " + e.getMessage());
             }
+
         }
     }
 }

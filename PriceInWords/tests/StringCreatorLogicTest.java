@@ -12,9 +12,9 @@ public class StringCreatorLogicTest {
 
     public void correctStringCreatorWorkTest() {
 
-        String scenario = "Тест интеграции алгоритма с беблиотекой слов";
+        String scenario = "Тест интеграции алгоритма с библиотекой слов";
         try {
-            String givenInput = "54908";
+            String givenInput = "54908.10";
             String result;
             List<String> actualMethodСallStack;
 
@@ -23,7 +23,8 @@ public class StringCreatorLogicTest {
 
             result =  creator.createString(givenInput, stubLibrary);
             actualMethodСallStack = stubLibrary.methodСallStack;
-            List<String> expectedMethodСallStack = Arrays.asList("Метод был вызван с параметром 50", "Метод был вызван с параметром 4000", "Метод был вызван с параметром 900", "Метод был вызван с параметром 8");
+            List<String> expectedMethodСallStack = Arrays.asList("Метод getValue был вызван с параметром 50", "Метод getValue был вызван с параметром 4000",
+                    "Метод getValue был вызван с параметром 900", "Метод getValue был вызван с параметром 8", "Метод getEnding был вызван с параметром 8", "Метод getCents был вызван с параметром 10");
             Assertions.assertEquals(expectedMethodСallStack, actualMethodСallStack);
 
             System.out.printf("\"%s\" passed %n", scenario);
@@ -35,9 +36,9 @@ public class StringCreatorLogicTest {
     public void correctCreateStringTest(){
         String scenario = "Тест корректной работы алгоритма создания строки";
         try {
-            String givenInput = "54908";
+            String givenInput = "54908.10";
             String actual;
-            String expected = "50 4000 900 8 рублей";
+            String expected = "50 4000 900 8 8 10";
 
             StringCreator creator = new StringCreatorLogic();
             LibraryDigitsInWordsSpy stubLibrary = new LibraryDigitsInWordsSpy();

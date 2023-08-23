@@ -16,7 +16,7 @@ public class NumbersInWordsApplicationTest {
         String scenario = "Тест работы приложения при передаче одного корректного запроса и остановке работы";
         try {
             String[] givenInput = new String[]{"666", "stop"};
-            String[] givenResult = new String[]{"шестьсот шестьдесят шесть рублей"};
+            String[] givenResult = new String[]{"запрос 1"};
             List<String> actual;
 
             IOServiceStub ioService = new IOServiceStub(givenInput); //подключение fake сервиса потоков ввода/вывода
@@ -26,7 +26,7 @@ public class NumbersInWordsApplicationTest {
             NumbersInWordsApplication application = new NumbersInWordsApplication();
             application.run(ioService, libraryWords, creator); //запуск приложения
             actual = ioService.output;
-            List<String> expected = Arrays.asList("Введите число от 1 до 99_999 для преобразования или stop для остановки программы", "шестьсот шестьдесят шесть рублей", "Введите число от 1 до 99_999 для преобразования или stop для остановки программы");
+            List<String> expected = Arrays.asList("Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы", "запрос 1", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы");
             Assertions.assertEquals(expected, actual);
             System.out.printf("\"%s\" passed %n", scenario);
         } catch (Throwable e){
@@ -35,9 +35,8 @@ public class NumbersInWordsApplicationTest {
 
         scenario = "Тест работы приложения при передаче трех корректных запросов и остановке работы";
         try {
-            String[] givenInput = new String[]{"666", "1345", "90854", "stop"};
-            String[] givenResult = new String[]{"шестьсот шестьдесят шесть рублей", "одна тысяча триста сорок пять рублей",
-                    "девяносто тысяч восемьсот пятьдесят четыре рубля"};
+            String[] givenInput = new String[]{"666", "1345", "90854.32", "stop"};
+            String[] givenResult = new String[]{"запрос 1", "запрос 2", "запрос 3"};
             List<String> actual;
 
             IOServiceStub ioService = new IOServiceStub(givenInput); //подключение fake сервиса потоков ввода/вывода
@@ -47,17 +46,17 @@ public class NumbersInWordsApplicationTest {
             NumbersInWordsApplication application = new NumbersInWordsApplication();
             application.run(ioService, libraryWords, creator); //запуск приложения
             actual = ioService.output;
-            List<String> expected = Arrays.asList("Введите число от 1 до 99_999 для преобразования или stop для остановки программы", "шестьсот шестьдесят шесть рублей", "Введите число от 1 до 99_999 для преобразования или stop для остановки программы", "одна тысяча триста сорок пять рублей", "Введите число от 1 до 99_999 для преобразования или stop для остановки программы", "девяносто тысяч восемьсот пятьдесят четыре рубля", "Введите число от 1 до 99_999 для преобразования или stop для остановки программы");
+            List<String> expected = Arrays.asList("Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы", "запрос 1", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы", "запрос 2", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы", "запрос 3", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы");
             Assertions.assertEquals(expected, actual);
             System.out.printf("\"%s\" passed %n", scenario);
         } catch (Throwable e){
             System.err.printf("\"%s\" fails with message \"%s\" %n", scenario, e.getMessage());
         }
 
-        scenario = "Тест работы приложения при передаче одного некорректного, одного корректного запроса и остановке работы";
+        scenario = "Тест работы приложения при передаче двух некорректных, одного корректного запроса и остановке работы";
         try {
-            String[] givenInput = new String[]{"-100", "100", "stop"};
-            String[] givenResult = new String[]{"сто рублей"};
+            String[] givenInput = new String[]{"-100", "TEXT", "100", "stop"};
+            String[] givenResult = new String[]{"запрос 1"};
             List<String> actual;
 
             IOServiceStub ioService = new IOServiceStub(givenInput); //подключение fake сервиса потоков ввода/вывода
@@ -67,7 +66,8 @@ public class NumbersInWordsApplicationTest {
             NumbersInWordsApplication application = new NumbersInWordsApplication();
             application.run(ioService, libraryWords, creator); //запуск приложения
             actual = ioService.output;
-            List<String> expected = Arrays.asList("Введите число от 1 до 99_999 для преобразования или stop для остановки программы", "Ошибка ввода, попробуйте еще раз", "Введите число от 1 до 99_999 для преобразования или stop для остановки программы", "сто рублей", "Введите число от 1 до 99_999 для преобразования или stop для остановки программы");
+            List<String> expected = Arrays.asList("Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы", "Ошибка ввода: число вне диапазона", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы",
+                    "Ошибка ввода: введенное значение не является числом", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы", "запрос 1", "Введите число от 0.01 до 99_999.99 для преобразования или stop для остановки программы");
             Assertions.assertEquals(expected, actual);
             System.out.printf("\"%s\" passed %n", scenario);
         } catch (Throwable e){
